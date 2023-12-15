@@ -164,7 +164,6 @@ Body:
     https://127.0.0.1:3000/delete/1
 ```
 
-
 ##### Retorno:
 ```bash
     Será retornado o valor JSON TRUE caso a edição seja bem sucedida
