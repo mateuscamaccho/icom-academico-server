@@ -1,10 +1,11 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, urlencoded } from 'express';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(cors());
 
@@ -44,6 +45,11 @@ app.get('/list/:id', async (req: Request, res: Response) => {
 
 app.post('/create', async (req: Request, res: Response) => {
     const { nome, descricao, produtora, ano, idadeMinima } = req.body
+
+    if (descricao.length > 100) {
+        return res.status(400).json({ error: 400, message: `Descrição muito longa (${descricao.length} caracteres), o limite é de 100 caracteres!` })
+    }
+
     await axios.post('https://academico.espm.br/testeapi/jogo', {
         nome,
         descricao,
@@ -66,6 +72,9 @@ app.post('/create', async (req: Request, res: Response) => {
 
 app.put('/alter/game', async (req: Request, res: Response) => {
     const { id, nome, descricao, produtora, ano, idadeMinima } = req.body
+    if (descricao.length > 100) {
+        return res.status(400).json({ error: 400, message: `Descrição muito longa (${descricao.length} caracteres), o limite é de 100 caracteres!` })
+    }
     await axios.put('https://academico.espm.br/testeapi/jogo', {
         id,
         nome,
