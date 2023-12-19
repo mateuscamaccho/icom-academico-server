@@ -84,7 +84,6 @@ app.put('/alter/game', async (req: Request, res: Response) => {
         idadeMinima
     })
         .then(function (response: AxiosResponse) {
-            console.log(response);
             res.json(response.data);
         })
         .catch(function (error: AxiosError) {
